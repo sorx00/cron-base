@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 crontab_user=""
+crontab_loglevel=""
+
 # setting user for additional cron jobs
 POSITIONAL=()
 while [[ $# -gt 0 ]]; do
@@ -11,6 +13,14 @@ case $1 in
     ;;
 -u|--user)
     crontab_user="-u $2"
+    shift 2
+    ;;
+-l=*|--loglevel)
+    crontab_loglevel="-l ${1#*=}"
+    shift
+    ;;
+-l|--loglevel)
+    crontab_loglevel="-l $2"
     shift 2
     ;;
 -*)
@@ -35,10 +45,10 @@ set -- "${POSITIONAL[@]}"
 
 # start cron
 default_crontabs_dir=/etc/crontabs
-crond -L /var/log/cron.log -c ${CRONTABS_DIR:-$default_crontabs_dir}
+crond -L /var/log/cron.log ${crontab_loglevel} -c ${CRONTABS_DIR:-$default_crontabs_dir}
 
 # trap SIGINT and SIGTERM signals and gracefully exit
-trap "echo \"stopping cron\"; kill \$!; exit" SIGINT SIGTERM
+trap "echo \"stopping crond\"; kill \$!; exit" SIGINT SIGTERM
 
 # start "daemon"
 while true
