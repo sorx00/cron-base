@@ -8,6 +8,7 @@ RUN set -ex \
     && mkfifo -m 0666 /var/log/cron.log \
     && ln -s /var/log/cron.log /var/log/crond.log
 
+RUN rm /etc/crontabs/root
 COPY start-cron /usr/sbin
 
-CMD ["start-cron"]
+ENTRYPOINT ["start-cron"]
