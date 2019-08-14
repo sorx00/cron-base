@@ -31,6 +31,8 @@ docker logs --follow cron
 
 *All you cron scripts should write logs to `/var/log/cron.log`. Otherwise you won't be able to view any log using this way.*
 
+You can set the logging level using a optional argument `-l`/`--loglevel`. Most verbose: 0, default: 8.
+
 ## Passing cron jobs by arguments
 
 Additionally you can pass any cron job by argument(s) using custom `start-cron` command at the moment of container creation (providing optional user with `-u`/`--user` option):
