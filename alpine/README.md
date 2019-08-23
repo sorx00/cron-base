@@ -35,10 +35,10 @@ You can set the logging level using a optional argument `-l`/`--loglevel`. Most 
 
 ## Passing cron jobs by arguments
 
-Additionally you can pass any cron job by argument(s) using custom `start-cron` command at the moment of container creation (providing optional user with `-u`/`--user` option):
+Additionally you can pass any cron job by argument(s) using custom command at the moment of container creation (providing optional user with `-u`/`--user` option):
 
 ```bash
-docker run --detach --name cron sorx00/cron-base:alpine start-cron --user www-data \
+docker run --detach --name cron sorx00/cron-base:alpine --user www-data \
     "0 1 \* \* \* echo '01:00 AM' >> /var/log/cron.log 2>&1" \
     "0 0 1 1 \* echo 'Happy New Year!!' >> /var/log/cron.log 2>&1"
 ```
@@ -56,7 +56,7 @@ docker run sorx00/cron-base:alpine init-script.sh --loglevel 0
 Almost any environ variable you passed to the Docker will be visible to your cron scripts. With the exception of `$SHELL`, `$PATH`, `$PWD`, `$USER`, etc.
 
 ```bash
-docker run --tty --rm --interactive --env MY_VAR=foo sorx00/cron-base:alpine start-cron \
+docker run --tty --rm --interactive --env MY_VAR=foo sorx00/cron-base:alpine \
     "\* \* \* \* \* env >> /var/log/cron.log 2>&1"
 ```
 
