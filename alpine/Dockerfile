@@ -1,8 +1,8 @@
 FROM alpine:latest
 
-RUN set -ex \
+RUN set -ex; \
 # install bash
-    && apk add --no-cache \
+    apk add --no-cache \
         bash \
 # making logging pipe
     && mkfifo -m 0666 /var/log/cron.log \

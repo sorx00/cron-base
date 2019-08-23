@@ -43,6 +43,14 @@ docker run --detach --name cron sorx00/cron-base:alpine start-cron --user www-da
     "0 0 1 1 \* echo 'Happy New Year!!' >> /var/log/cron.log 2>&1"
 ```
 
+## Passing additional entrypoint by argument
+
+You can pass own script or another executable file to run before `crond`.
+
+```bash
+docker run sorx00/cron-base:alpine init-script.sh --loglevel 0
+```
+
 ## Environ variables
 
 Almost any environ variable you passed to the Docker will be visible to your cron scripts. With the exception of `$SHELL`, `$PATH`, `$PWD`, `$USER`, etc.

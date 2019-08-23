@@ -8,18 +8,22 @@ POSITIONAL=()
 while [[ $# -gt 0 ]]; do
 case $1 in
 -u=*|--user=*)
+    echo "Set user $1"
     crontab_user="-u ${1#*=}"
     shift
     ;;
 -u|--user)
+    echo "Set user $2"
     crontab_user="-u $2"
     shift 2
     ;;
 -l=*|--loglevel)
+    echo "Set loglevel $1"
     crontab_loglevel="-l ${1#*=}"
     shift
     ;;
 -l|--loglevel)
+    echo "Set loglevel $2"
     crontab_loglevel="-l $2"
     shift 2
     ;;
@@ -28,11 +32,17 @@ case $1 in
     exit 1
     ;;
 *)
-    POSITIONAL+=("$1")
+    if [[ -x $1 ]]; then
+        echo "$1 determined as executable file, executing..."
+        $1
+    else
+        POSITIONAL+=("$1")
+    fi
     shift
     ;;
 esac
 done
+echo "Positional arguments: ${POSITIONAL[@]}"
 set -- "${POSITIONAL[@]}"
 
 # adding additional cron jobs passed by arguments
